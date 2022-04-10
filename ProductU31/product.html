@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <button>Removed</button>
+    <button>Sold</button> -->
+    <div id="container"></div>
+</body>
+</html>
+<script>
+var database =[
+    {
+    image_url:
+     "https://rukminim1.flixcart.com/image/150/150/jingcy80/mat/m/f/e/free-pack-of-1-welcome-mat-home-use-multipurpose-mat-artificial-original-imaf6dhrtzyksfbd.jpeg?q=70",
+     name: "Door Mats",
+     price: "$100",
+    },
+    {
+        image_url:
+        "https://content.shop4reebok.com/static/Product-GP7180/reebok_GP7180_1.jpg.plp",
+      name: "MEN'S REEBOK TRAINING WORKOUT  TEE  ",
+      price: 1299,
+      strikedoffprice: 1440
+    },
+    {
+        image_url:
+        "https://content.shop4reebok.com/static/Product-HG5456/reebok_HG5456_1.jpg.plp",
+      name: "MEN'S REEBOK FITNESS TRAINING  SWEATSHIRT",
+      price: 1079,
+      strikedoffprice: 1799,
+    },
+    {
+        image_url:
+        "https://content.shop4reebok.com/static/Product-GT2338/reebok_GT2338_1.jpg.plp",
+      name: "WOMEN'S REEBOK SLEEVE TEE",
+      price: 699,
+      strikedoffprice: 1245,
+    }
+];
+
+var cartData=JSON.parse(localStorage.getItem("cart"))||[]
+
+
+   database.map(function (elem){
+
+    var box = document.createElement("div")
+
+    var img = document.createElement("img");
+    img.src = elem.image_url;
+    
+
+    var name = document.createElement("p");
+    name.textContent = elem.name;
+
+    var price = document.createElement("p");
+    price.innerText = elem.price;
+
+    var rmvbtn = document.createElement("button")
+    rmvbtn.innerText="Removed";
+
+    rmvbtn.addEventListener("click",function(){
+      removeFunction(elem)
+    });
+
+    var sldbtn = document.createElement("button")
+    sldbtn.setAttribute("id", "sold")
+    sldbtn.innerText="Sold"
+
+    sldbtn.addEventListener("click", function() {
+        soldFunction(elem)
+    })
+    box.append(img, name, price, rmvbtn, sldbtn);
+
+    document.querySelector("#container").append(box)
+
+ })
+
+function removeFunction(elem){
+     database.splice( 1)
+    localStorage.setItem("products", JSON.stringify(database))
+    window.location.reload() 
+} 
+function soldFunction(elem){
+    if(elem.sold =="True"){
+        elem.sold="False"
+        document.querySelector("sold").style.backgroundColor = "red";
+        localStorage.setItem(database,JSON.stringify(database))
+
+    }
+    else{
+        elem.sold =="True"
+        document.querySelector("#sold").style.backgroundColor= "green"
+        localStorage.setItem(database,JSON.stringify(database))
+    }
+}
+
+</script>
